@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +9,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const SignInPage());
+  runApp(new MaterialApp(
+    home: new SignInPage(),
+  ));
 }
 
 class SignInPage extends StatelessWidget {
@@ -43,34 +45,37 @@ class SignInPage extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
+                    const SizedBox(height: 12.0),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Username'),
                       validator: (value) => value!.trim().isEmpty
                           ? 'Please enter a valid username.'
                           : null,
                     ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
+                    const SizedBox(height: 16.0),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Email'),
                       validator: (value) => value!.contains('@')
                           ? null
                           : 'Please enter a valid email.',
                     ),
-                    const SizedBox(
-                      height: 28.0,
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      decoration: InputDecoration(hintText: 'Password'),
+                      obscureText: true,
+                      validator: (value) => value!.length < 6
+                          ? 'Must be at least 6 characters.'
+                          : null,
                     ),
+                    const SizedBox(height: 28.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          elevation: 1.0,
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            backgroundColor: Theme.of(context).primaryColor,
-                          )),
+                        elevation: 1.0,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
+                      ),
                       child: const Text('Sign Up'),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -78,9 +83,7 @@ class SignInPage extends StatelessWidget {
                         }
                       },
                     ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
+                    const SizedBox(height: 12.0),
                   ],
                 ),
               ),
